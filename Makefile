@@ -17,7 +17,7 @@ SRC_FILES = $(SRC_DIR)/logger.c \
 # Simulation executables
 SIMULATIONS = simulate_memory_error simulate_file_error simulate_device_error
 
-all: mkdirs $(SIMULATIONS)
+all: clean mkdirs $(SIMULATIONS)
 
 simulate_memory_error: $(SIM_DIR)/simulate_memory_error.c $(SRC_FILES)
 	$(CC) $(CFLAGS) $(SIM_DIR)/simulate_memory_error.c $(SRC_FILES) -o $(BUILD_DIR)/simulate_memory_error

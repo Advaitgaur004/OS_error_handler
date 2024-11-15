@@ -37,7 +37,13 @@ const char* error_type_to_string(ErrorType type) {
         case DEVICE_BUSY:
             return "DEVICE_BUSY";
         case DEVICE_ERROR_ACCESS_FAILURE:
-            return "DEVICE_ERROR_ACCESS_FAILURE";    
+            return "DEVICE_ERROR_ACCESS_FAILURE";
+        case INVALID_ARGUMENT:
+            return "INVALID_ARGUMENT";
+        case BAD_FILE_DESCRIPTOR:
+            return "BAD_FILE_DESCRIPTOR";
+        case WRONG_DEVICE_COMMAND:
+            return "WRONG_DEVICE_COMMAND";
         default:
             return "UNKNOWN_ERROR";
     }
