@@ -70,10 +70,9 @@ int main(int argc, char *argv[]) {
             close(fd);
             break;
         case 4:
-            printf("Simulating device access error DEVICE_ACCESS_FAILURE\n");
+            printf("Simulating device access error DEVICE_BUSY/RESOURCE_UNAVAILBLE\n");
             fd = open("build/example.lock", O_RDWR);
             
-            int fd = open("example.lock", O_RDWR);
             if (fd == -1) {
                 perror("open");
                 return 1;
