@@ -7,11 +7,13 @@
 #include "error_handler.h"
 #include <stdlib.h>
 #include <sys/file.h>
+#include <sys/ioctl.h>
 
+#define MY_IOCTL_CMD 0x1234
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
-        fprintf(stderr, "Usage: %s <error_code (1: DEVICE_NOT_FOUND, 2: TXT_BUSY, 3: DEVICE_ACCESS_FAILURE , 4:DEVICE_BUSY)>\n", argv[0]);
+        fprintf(stderr, "Usage: %s <error_code (1: DEVICE_NOT_FOUND, 2: ENOTTY, 3: DEVICE_ACCESS_FAILURE , 4:DEVICE_BUSY)>\n", argv[0]);
         return -1;
     }
     int input_error = atoi(argv[1]);
@@ -33,20 +35,17 @@ int main(int argc, char *argv[]) {
             close(fd);
             break;
         case 2:
-            printf("Simulating device access error TXT_BUSY\n");
-            fd = open("build/sleep", O_WRONLY|O_TRUNC);
-            
-            if (fd == -1) {
-                printf("Device Error: %s\n", strerror(errno));
-                
-                if (errno == ETXTBSY) {
-                    handle_error(TXT_BUSY, strerror(errno), errno);
-                }
-                return errno;
+            printf("Simulating device access error WRONG_DEVICE_COMMAND\n");
+            int fd = open("build/sleep", O_RDONLY);
+    
+            // Attempt to issue an IOCTL command to the device
+            int ret = ioctl(fd, MY_IOCTL_CMD, NULL);
+
+            if (ret == -1 && errno == ENOTTY) {
+                handle_error(WRONG_DEVICE_COMMAND, strerror(errno), errno);
             }
-            else{
-                printf("run ./sleep in another terminal to get this error as file not running\n");
-            }
+
+
             close(fd);
             break;
         case 3:
