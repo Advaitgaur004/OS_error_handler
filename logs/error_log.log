@@ -15,3 +15,6 @@
 [2024-11-15 10:50:] DEVICE_ERROR: No such file or directory (Error Code: 2)
 [2024-11-15 10:51:] TXT_BUSY: Text file busy (Error Code: 26)
 [2024-11-15 10:52:] NULL_ERROR: Null pointer dereference detected. (Error Code: 0)
+[2024-11-19 09:04:] FILE_ACCESS_ERROR: No such file or directory (Error Code: 2)
+[2024-11-19 09:04:] UNKNOWN_ERROR: System resources cleanup performed (Error Code: 0)
+[2024-11-19 09:06:] DEVICE_ERROR_ACCESS_FAILURE: Permission denied (Error Code: 13)
