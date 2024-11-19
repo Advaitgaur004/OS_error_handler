@@ -22,7 +22,6 @@ int main(int argc, char *argv[]) {
             FILE *file = fopen("build/supper.txt", "r");
             if (file == NULL && errno==ENOENT) {
                 printf("File Access Error: %s\n", strerror(errno));
-                perror("");
                 handle_error(FILE_ACCESS_ERROR, strerror(errno), errno);
                 return errno;
             }
@@ -32,8 +31,7 @@ int main(int argc, char *argv[]) {
             printf("Simulating file access error...\n");
             FILE *file1 = fopen("build/supper.txt", "s");
             if (file1 == NULL && errno==EINVAL) {
-                printf("File Access Error: %s\n", strerror(errno));
-                perror("");
+                printf("Invalid Arguement Error: %s\n", strerror(errno));
                 handle_error(INVALID_ARGUMENT, strerror(errno), errno);
                 return errno;
             }
@@ -60,11 +58,7 @@ int main(int argc, char *argv[]) {
         case 4:
             printf("Simulating file access error BAD_FILE_DESCRIPTOR\n");
             fd = open("/build/sleep", O_RDONLY);
-    
-            // Attempt to issue an IOCTL command to the device
-            int ret = ioctl(fd, MY_IOCTL_CMD, NULL);
-
-            if (ret == -1 && errno == EBADF) {
+            if (fd == -1 && errno == EBADF) {
                 handle_error(BAD_FILE_DESCRIPTOR, strerror(errno), errno);
             }
 
