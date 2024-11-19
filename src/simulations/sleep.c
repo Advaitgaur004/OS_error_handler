@@ -19,9 +19,12 @@
 #endif
 
 int main(void) {
-    int fd = open("example.lock", O_CREAT | O_RDWR, 0666);
+
+    int fd = open("build/example.lock", O_CREAT | O_RDWR);
+
     if (fd == -1) {
-        perror("open");
+        perror("");
+        printf("%d",errno);
         return 1;
     }
 
@@ -31,9 +34,10 @@ int main(void) {
         close(fd);
         return 1;
     }
-
-    printf("File locked. Press Ctrl+C to exit or wait for 10000 seconds...\n");
-    sleep(10000); // Simulate a long-running process
+    int a;
+    printf("File locked. Do not give input until work is done...\n");
+    scanf("%d",&a); //changed to scanf as to give more flexible time and unlock is possible
+    //sleep(10000); // Simulate a long-running process
 
     // Unlock the file
     if (flock(fd, LOCK_UN) == -1) {
